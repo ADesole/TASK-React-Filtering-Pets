@@ -5,10 +5,21 @@ import { useState } from "react";
 function PetsList() {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
-
-  const petList = pets
-    .filter((pet) => pet.name.toLowerCase().includes(query.toLowerCase()))
-    .map((pet) => <PetItem pet={pet} key={pet.id} />);
+  let petList;
+  console.log(type);
+  if (type !== "") {
+    petList = pets
+      .filter(
+        (pet) =>
+          pet.name.toLowerCase().includes(query.toLowerCase()) &&
+          pet.type === type
+      )
+      .map((pet) => <PetItem pet={pet} key={pet.id} />);
+  } else {
+    petList = pets
+      .filter((pet) => pet.name.toLowerCase().includes(query.toLowerCase()))
+      .map((pet) => <PetItem pet={pet} key={pet.id} />);
+  }
   return (
     <section id="doctors" className="doctor-section pt-140">
       <div className="container">
