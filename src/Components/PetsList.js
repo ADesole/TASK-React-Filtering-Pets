@@ -4,6 +4,8 @@ import { useState } from "react";
 
 function PetsList() {
   const [query, setQuery] = useState("");
+  const [type, setType] = useState("");
+
   const petList = pets
     .filter((pet) => pet.name.toLowerCase().includes(query.toLowerCase()))
     .map((pet) => <PetItem pet={pet} key={pet.id} />);
@@ -28,7 +30,10 @@ function PetsList() {
               </div>
               <br />
               Type:
-              <select className="form-select">
+              <select
+                className="form-select"
+                onChange={(event) => setType(event.target.value)}
+              >
                 <option value="" selected>
                   All
                 </option>
