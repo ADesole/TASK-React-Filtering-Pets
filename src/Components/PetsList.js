@@ -12,12 +12,16 @@ function PetsList() {
       .filter(
         (pet) =>
           pet.name.toLowerCase().includes(query.toLowerCase()) &&
-          pet.type === type
+          pet.type === type &&
+          pet.id !== 0
       )
       .map((pet) => <PetItem pet={pet} key={pet.id} />);
   } else {
     petList = pets
-      .filter((pet) => pet.name.toLowerCase().includes(query.toLowerCase()))
+      .filter(
+        (pet) =>
+          pet.name.toLowerCase().includes(query.toLowerCase()) && pet.id !== 0
+      )
       .map((pet) => <PetItem pet={pet} key={pet.id} />);
   }
   return (
