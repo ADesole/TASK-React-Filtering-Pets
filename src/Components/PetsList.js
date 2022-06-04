@@ -5,25 +5,38 @@ import { useState } from "react";
 function PetsList() {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("");
-  let petList;
-  console.log(type);
-  if (type !== "") {
-    petList = pets
-      .filter(
-        (pet) =>
-          pet.name.toLowerCase().includes(query.toLowerCase()) &&
-          pet.type === type &&
-          pet.id !== 0
-      )
-      .map((pet) => <PetItem pet={pet} key={pet.id} />);
-  } else {
-    petList = pets
-      .filter(
-        (pet) =>
-          pet.name.toLowerCase().includes(query.toLowerCase()) && pet.id !== 0
-      )
-      .map((pet) => <PetItem pet={pet} key={pet.id} />);
-  }
+  const [petList, setPetList] = useState(pets);
+  
+
+// handle adopt
+const handleAdopt = petId => {setPetList(petList.filter(pet => pet.id !== petId))
+}
+// const petItemId = petList.map((pet) => <PetItem pet={pet} key={pet.id} handleAdopt={handleAdopt}/>);
+// petItemId.filter(pet => pet.name.toLowerCase().includes(query.toLowerCase()))
+
+const petListFiltered = petList.filter(pet => pet.name.toLowerCase().includes(query.toLowerCase()) && pet.type.toLowerCase().includes(type.toLowerCase())).map((pet) => <PetItem pet={pet} key={pet.id} handleAdopt={handleAdopt}/>);
+
+
+  //Filtering if all is selected display all else display only selected type
+  // if (type === "") {
+  //   petList = pets
+  //     .filter(
+  //       (pet) =>
+  //         pet.name.toLowerCase().includes(query.toLowerCase()) && pet.id !== 0
+  //     )
+  //     .map((pet) => <PetItem pet={pet} key={pet.id}/>);
+  // } else {
+  //   petList = pets
+  //     .filter(
+  //       (pet) =>
+  //         pet.name.toLowerCase().includes(query.toLowerCase()) &&
+  //         pet.type === type &&
+  //         pet.id !== 0
+  //     )
+  //     .map((pet) => <PetItem pet={pet} key={pet.id}/>);
+  // }
+
+  
   return (
     <section id="doctors" className="doctor-section pt-140">
       <div className="container">
@@ -60,7 +73,7 @@ function PetsList() {
           </div>
         </div>
 
-        <div className="row justify-content-center">{petList}</div>
+        <div className="row justify-content-center">{petListFiltered}</div>
       </div>
     </section>
   );
